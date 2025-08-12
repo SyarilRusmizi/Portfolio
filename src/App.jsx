@@ -8,7 +8,7 @@ const App = () => {
 
   // Function to handle smooth scrolling and active section tracking
   const scrollToSection = (sectionId) => {
-    document.getElementById(sectionId).scrollInToView({ behavior: 'smooth' });
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' }); // Corrected typo here
     setActiveSection(sectionId);
   };
 
@@ -320,7 +320,6 @@ const App = () => {
                   <path fillRule="evenodd" d="M12 0C5.373 0 0 5.373 0 12c0 5.303 3.438 9.875 8.207 11.417.6.11.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.043-1.61-4.043-1.61-.54-.913-1.314-1.157-1.314-1.157-1.082-.74.082-.725.082-.725 1.205.086 1.838 1.238 1.838 1.238 1.07 1.835 2.809 1.305 3.49.997.108-.775.418-1.305.762-1.605-2.665-.3-5.464-1.334-5.464-5.932 0-1.31.468-2.38.123-3.227-.123-.3-.418-1.523.117-3.176 0 0 1.006-.322 3.3.3.957-.266 1.983-.4 3.003-.4s2.046.134 3.003.4c2.293-.622 3.298-.3 3.298-.3.535 1.653.24 2.876.117 3.176-.345.847.123 1.917.123 3.227 0 4.59-2.804 5.624-5.474 5.922.43.37.818 1.102.818 2.222 0 1.606-.015 2.895-.015 3.284 0 .318.22.69.825.577C20.565 21.873 24 17.301 24 12c0-6.627-5.373-12-12-12z" clipRule="evenodd" />
                 </svg>
               </a>
-              {/* Twitter/X Icon */}
               
             </div>
           </div>
