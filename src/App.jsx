@@ -5,16 +5,25 @@ const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   // State to manage the current theme: 'dark' or 'light'
   const [theme, setTheme] = useState('dark');
+  // State to manage the visibility of the mobile navigation menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Function to handle smooth scrolling and active section tracking
   const scrollToSection = (sectionId) => {
-    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' }); // Corrected typo here
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
     setActiveSection(sectionId);
+    // Close mobile menu after clicking a link (headless UI logic)
+    setIsMobileMenuOpen(false);
   };
 
   // Function to toggle between light and dark themes
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
+
+  // Function to toggle mobile menu visibility (headless UI logic)
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prevState) => !prevState);
   };
 
   // Effect to apply theme classes to the document body
@@ -72,8 +81,8 @@ const App = () => {
       <nav className={`fixed w-full ${navbarBgClass} bg-opacity-90 z-50 shadow-lg py-4 transition-colors duration-500`}>
         <div className="container mx-auto flex justify-between items-center px-4">
           <a href="#" className={`text-2xl font-bold ${navbarTextClass}`}>Syaril</a>
-          {/* Reverted navigation links and theme toggle to original structure */}
-          <ul className="flex space-x-6 items-center">
+          {/* Desktop Navigation Links - hidden on small screens */}
+          <ul className="hidden md:flex space-x-6 items-center">
             {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
               <li key={section}>
                 <button
@@ -86,7 +95,7 @@ const App = () => {
                 </button>
               </li>
             ))}
-            {/* Theme Toggle Button */}
+            {/* Theme Toggle Button for Desktop */}
             <li>
               <button
                 onClick={toggleTheme}
@@ -105,11 +114,75 @@ const App = () => {
               </button>
             </li>
           </ul>
+
+          {/* Mobile Menu Button (Hamburger/X icon) - visible only on small screens */}
+          <div className="md:hidden flex items-center">
+            {/* Theme Toggle Button for Mobile */}
+            <button
+              onClick={toggleTheme}
+              className={`mr-4 p-2 rounded-full ${cardBgClass} ${cardShadowClass} transition-all duration-300 flex items-center justify-center`}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <svg className={`w-6 h-6 ${navbarTextClass}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+              ) : (
+                <svg className={`w-6 h-6 ${navbarTextClass}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.459 4.653a.75.75 0 00.912 1.056l.01-.01c.783-.783 1.378-1.636 1.79-2.582a.75.75 0 00-1.285-.603c-.234.546-.576 1.052-.993 1.523l-.01.01zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM3 10a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zm-.459-4.653a.75.75 0 00-1.056-.912l.01-.01A6.715 6.715 0 012.21 4.502a.75.75 0 00.603 1.285c.546-.234 1.052-.576 1.523-.993l.01-.01z" clipRule="evenodd"></path>
+                  </svg>
+                )}
+              </button>
+            <button
+              onClick={toggleMobileMenu}
+              className={`p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 ${
+                theme === 'dark' ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-200'
+              }`}
+              aria-controls="mobile-menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
       </nav>
 
+      {/* Mobile Menu Overlay (Headless UI component) */}
+      {isMobileMenuOpen && (
+        <div
+          id="mobile-menu"
+          className={`fixed inset-0 z-40 flex flex-col items-center justify-center ${
+            theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
+          } bg-opacity-95 transition-transform transform ease-in-out duration-300`}
+        >
+          <ul className="flex flex-col space-y-8 text-2xl font-bold">
+            {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
+              <li key={section}>
+                <button
+                  onClick={() => scrollToSection(section)}
+                  className={`capitalize hover:${navbarTextClass} transition-colors duration-300 ${
+                    activeSection === section ? navbarTextClass : (theme === 'dark' ? 'text-gray-300' : 'text-gray-700')
+                  }`}
+                >
+                  {section}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+
       {/* Home Section */}
-      <section id="home" className="relative h-screen flex items-center justify-center text-center overflow-hidden pt-20">
+      <section id="home" className="relative h-screen flex items-center justify-center text-center overflow-hidden pt-24">
         {/* Background gradient (always dark for this vibrant effect) */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-gray-900 to-blue-900 opacity-70"></div>
         {/* Animated particles (simple circles for demonstration) */}
@@ -135,7 +208,7 @@ const App = () => {
             alt="Profile"
             className={`rounded-full mx-auto mb-6 border-4 ${profileBorderClass} shadow-lg`}
           />
-          <h1 className={`text-6xl font-extrabold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} drop-shadow-lg`}>Hello, I'm <span className={headingColorClass}>Syaril</span></h1>
+          <h1 className={`text-6xl font-extrabold mb-4 drop-shadow-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Hello, I'm <span className={headingColorClass}>Syaril</span></h1>
           <p className={`text-3xl font-light mb-8 ${textColorClass}`}>A passionate Web Developer | Designer </p>
           <button
             onClick={() => scrollToSection('projects')}
@@ -320,7 +393,6 @@ const App = () => {
                   <path fillRule="evenodd" d="M12 0C5.373 0 0 5.373 0 12c0 5.303 3.438 9.875 8.207 11.417.6.11.82-.26.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.043-1.61-4.043-1.61-.54-.913-1.314-1.157-1.314-1.157-1.082-.74.082-.725.082-.725 1.205.086 1.838 1.238 1.838 1.238 1.07 1.835 2.809 1.305 3.49.997.108-.775.418-1.305.762-1.605-2.665-.3-5.464-1.334-5.464-5.932 0-1.31.468-2.38.123-3.227-.123-.3-.418-1.523.117-3.176 0 0 1.006-.322 3.3.3.957-.266 1.983-.4 3.003-.4s2.046.134 3.003.4c2.293-.622 3.298-.3 3.298-.3.535 1.653.24 2.876.117 3.176-.345.847.123 1.917.123 3.227 0 4.59-2.804 5.624-5.474 5.922.43.37.818 1.102.818 2.222 0 1.606-.015 2.895-.015 3.284 0 .318.22.69.825.577C20.565 21.873 24 17.301 24 12c0-6.627-5.373-12-12-12z" clipRule="evenodd" />
                 </svg>
               </a>
-              
             </div>
           </div>
         </div>
