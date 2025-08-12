@@ -196,7 +196,7 @@ const App = () => {
               />
               <div className="p-6">
                 <h3 className={`text-3xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>POLY-VR</h3>
-                <h2 className={`text-2xl font-medium mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>2024</h2>
+                <h2 className={`text-2xl font-medium italic mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>2024</h2>
                 <p className={`${subtextColorClass} mb-4`}>
                   A gamified augmented reality mobile application designed to enhance
                   learning in polymer chemistry. Developed as a final-year project using Unity 3D,
@@ -248,7 +248,7 @@ const App = () => {
               />
               <div className="p-6">
                 <h3 className={`text-3xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Teracell.com.my</h3>
-                <h2 className={`text-2xl font-medium mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>2025</h2>
+                <h2 className={`text-2xl font-medium italic mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>2025</h2>
                 <p className={`${subtextColorClass} mb-4`}>
                   A corporate website built for Teracell Network Sdn. Bhd., featuring a modern responsive design,
                   optimized navigation, and SEO-friendly structure. Developed using WordPress with custom theme adjustments
