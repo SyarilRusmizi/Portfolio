@@ -221,8 +221,8 @@ const App = () => {
           <button
             onClick={() => {
               const link = document.createElement("a");
-              link.href = "/Syaril-Resume.pdf";
-              link.download = "Syaril-Resume.pdf";
+              link.href = "/RESUME.pdf";
+              link.download = "SYARIL.pdf";
               link.click();
               }}
             className={`${buttonBgClass} ${buttonTextColor} font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300`}
