@@ -202,20 +202,37 @@ const App = () => {
             ></div>
           ))}
         </div>
-        <div className={`relative z-30 p-8 rounded-lg shadow-2xl backdrop-blur-sm ${cardBgClass} bg-opacity-70`}>
+        <div className={`relative z-30 p-10 rounded-lg shadow-2xl backdrop-blur-sm ${cardBgClass} bg-opacity-70`}>
           <img
             src="/Profile.jpg"
             alt="Profile"
-            className={`rounded-full mx-auto mb-6 border-4 ${profileBorderClass} shadow-lg`}
+            className={`rounded-full mx-auto mb-1 border-4 ${profileBorderClass} shadow-lg`}
           />
           <h1 className={`text-6xl font-extrabold mb-4 drop-shadow-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Hello, I'm <span className={headingColorClass}>Syaril</span></h1>
           <p className={`text-3xl font-light mb-8 ${textColorClass}`}>A passionate Web Developer | Designer </p>
-          <button
+          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+
+            <button
             onClick={() => scrollToSection('projects')}
             className={`${buttonBgClass} ${buttonTextColor} font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300`}
           >
             View My Work
           </button>
+          <button
+            onClick={() => {
+              const link = document.createElement("a");
+              link.href = "/Syaril-Resume.pdf";
+              link.download = "Syaril-Resume.pdf";
+              link.click();
+              }}
+            className={`${buttonBgClass} ${buttonTextColor} font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300`}
+          >
+          Download Resume
+          </button>   
+
+          </div>
+          
+          
         </div>
       </section>
 
