@@ -54,8 +54,14 @@ const App = () => {
   }, []);
 
   // Define theme-dependent classes
-  const navbarBgClass = theme === 'dark' ? 'bg-gray-900' : 'bg-white';
-  const navbarTextClass = theme === 'dark' ? 'text-teal-400' : 'text-teal-600';
+  // UPDATED: Navbar background for "headless" effect
+  const navbarBgClass = 'bg-transparent backdrop-blur-md'; // Makes background transparent, relies on blur
+  const navbarBorderClass = theme === 'dark' ? 'border-b border-gray-700' : 'border-b border-gray-200';
+  // UPDATED: Adjusted text colors for better visibility over a transparent background
+  const navbarTextClass = theme === 'dark' ? 'text-gray-200' : 'text-gray-800';
+  const navbarHoverTextClass = theme === 'dark' ? 'hover:text-teal-400' : 'hover:text-teal-600';
+  const navbarActiveTextClass = theme === 'dark' ? 'text-teal-400 border-b-2 border-teal-400' : 'text-teal-600 border-b-2 border-teal-600';
+
   const sectionBgPrimary = theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200';
   const sectionBgSecondary = theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50';
   const headingColorClass = theme === 'dark' ? 'text-teal-400' : 'text-teal-600';
@@ -77,18 +83,18 @@ const App = () => {
   return (
     // Main container dynamic classes based on theme
     <div className={`min-h-screen transition-colors duration-500`}>
-      {/* Navbar */}
-      <nav className={`fixed w-full ${navbarBgClass} bg-opacity-90 z-50 shadow-lg py-4 transition-colors duration-500`}>
+      {/* Navbar - UPDATED: Removed bg-opacity-90, using navbarBgClass */}
+      <nav className={`fixed w-full ${navbarBgClass} ${navbarBorderClass} z-50 shadow-lg py-4 transition-colors duration-500`}>
         <div className="container mx-auto flex justify-between items-center px-4">
-          <a href="#" className={`text-2xl font-bold ${navbarTextClass}`}>Syaril</a>
+          <a href="#" className={`text-2xl font-bold ${navbarTextClass} ${navbarHoverTextClass}`}>Syaril</a>
           {/* Desktop Navigation Links - hidden on small screens */}
           <ul className="hidden md:flex space-x-6 items-center">
             {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
               <li key={section}>
                 <button
                   onClick={() => scrollToSection(section)}
-                  className={`capitalize text-lg font-medium hover:${navbarTextClass} transition-colors duration-300 ${
-                    activeSection === section ? `${navbarTextClass} border-b-2 ${navbarTextClass.replace('text', 'border')}` : (theme === 'dark' ? 'text-gray-300' : 'text-gray-700')
+                  className={`capitalize text-lg font-medium ${navbarHoverTextClass} transition-colors duration-300 ${
+                    activeSection === section ? navbarActiveTextClass : navbarTextClass
                   }`}
                 >
                   {section}
@@ -130,9 +136,9 @@ const App = () => {
               ) : (
                 <svg className={`w-6 h-6 ${navbarTextClass}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.459 4.653a.75.75 0 00.912 1.056l.01-.01c.783-.783 1.378-1.636 1.79-2.582a.75.75 0 00-1.285-.603c-.234.546-.576 1.052-.993 1.523l-.01.01zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM3 10a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zm-.459-4.653a.75.75 0 00-1.056-.912l.01-.01A6.715 6.715 0 012.21 4.502a.75.75 0 00.603 1.285c.546-.234 1.052-.576 1.523-.993l.01-.01z" clipRule="evenodd"></path>
-                  </svg>
-                )}
-              </button>
+                </svg>
+              )}
+            </button>
             <button
               onClick={toggleMobileMenu}
               className={`p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 ${
@@ -155,21 +161,19 @@ const App = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay (Headless UI component) */}
+      {/* Mobile Menu Overlay (Headless UI component) - UPDATED: Reflects new navbar styles */}
       {isMobileMenuOpen && (
         <div
           id="mobile-menu"
-          className={`fixed inset-0 z-40 flex flex-col items-center justify-center ${
-            theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
-          } bg-opacity-95 transition-transform transform ease-in-out duration-300`}
+          className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-transparent bg-opacity-95 backdrop-blur-md transition-transform transform ease-in-out duration-300`}
         >
           <ul className="flex flex-col space-y-8 text-2xl font-bold">
             {['home', 'about', 'skills', 'projects', 'contact'].map((section) => (
               <li key={section}>
                 <button
                   onClick={() => scrollToSection(section)}
-                  className={`capitalize hover:${navbarTextClass} transition-colors duration-300 ${
-                    activeSection === section ? navbarTextClass : (theme === 'dark' ? 'text-gray-300' : 'text-gray-700')
+                  className={`capitalize ${navbarHoverTextClass} transition-colors duration-300 ${
+                    activeSection === section ? navbarActiveTextClass : navbarTextClass
                   }`}
                 >
                   {section}
@@ -202,37 +206,35 @@ const App = () => {
             ></div>
           ))}
         </div>
-        <div className={`relative z-30 p-10 rounded-lg shadow-2xl backdrop-blur-sm ${cardBgClass} bg-opacity-70`}>
+        <div className={`relative z-30 p-8 rounded-lg shadow-2xl backdrop-blur-sm ${cardBgClass} bg-opacity-70`}>
           <img
             src="/Profile.jpg"
             alt="Profile"
-            className={`rounded-full mx-auto mb-1 border-4 ${profileBorderClass} shadow-lg`}
+            className={`rounded-full mx-auto mb-2 border-4 ${profileBorderClass} shadow-lg`}
           />
+          {/* REVERTED: Main header back to original theme-dependent color */}
           <h1 className={`text-6xl font-extrabold mb-4 drop-shadow-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Hello, I'm <span className={headingColorClass}>Syaril</span></h1>
           <p className={`text-3xl font-light mb-8 ${textColorClass}`}>A passionate Web Developer | Designer </p>
+          {/* Buttons for View My Work and Download Resume */}
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-
             <button
-            onClick={() => scrollToSection('projects')}
-            className={`${buttonBgClass} ${buttonTextColor} font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300`}
-          >
-            View My Work
-          </button>
-          <button
-            onClick={() => {
-              const link = document.createElement("a");
-              link.href = "/RESUME.pdf";
-              link.download = "SYARIL.pdf";
-              link.click();
-              }}
-            className={`${buttonBgClass} ${buttonTextColor} font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300`}
-          >
-          Download Resume
-          </button>   
-
+              onClick={() => scrollToSection('projects')}
+              className={`${buttonBgClass} ${buttonTextColor} font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300`}
+            >
+              View My Work
+            </button>
+            <a
+              href="/Syaril-Resume.pdf"
+              download="Syaril-Resume.pdf"
+              className={`flex items-center justify-center ${buttonBgClass} ${buttonTextColor} font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300`}
+            >
+              {/* Download icon SVG */}
+              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 11.586V3a1 1 0 112 0v8.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"></path>
+              </svg>
+              Download Resume
+            </a>
           </div>
-          
-          
         </div>
       </section>
 
@@ -280,7 +282,7 @@ const App = () => {
             {/* Project 3 */}
             <div className={`${sectionBgSecondary} rounded-lg ${cardShadowClass} overflow-hidden transform hover:scale-105 transition-transform duration-300`}>
               <img
-                src="POLY-VR.jpeg"
+                src="public/POLY-VR.jpeg" // Placeholder image
                 alt="Project 1"
                 className="w-full h-52 object-cover"
               />
@@ -306,7 +308,7 @@ const App = () => {
             {/* Project 2 */}
             <div className={`${sectionBgSecondary} rounded-lg ${cardShadowClass} overflow-hidden transform hover:scale-105 transition-transform duration-300`}>
               <img
-                src="Qudwah.png"
+                src="public/Qudwah.png" // Placeholder image
                 alt="Project 2"
                 className="w-full h-52 object-cover"
               />
@@ -332,7 +334,7 @@ const App = () => {
             {/* Project 1 */}
             <div className={`${sectionBgSecondary} rounded-lg ${cardShadowClass} overflow-hidden transform hover:scale-105 transition-transform duration-300`}>
               <img
-                src="Teracell.png"
+                src="public/Teracell.png" // Placeholder image
                 alt="Project 1"
                 className="w-full h-52 object-cover"
               />
@@ -422,7 +424,8 @@ const App = () => {
 
       {/* Global styles for body and custom animations */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        /* Note: @import url for fonts should ideally be in index.html or index.css for Vite */
+        /* It's included here as a fallback if not added elsewhere. */
 
         body {
           scroll-behavior: smooth; /* Ensure smooth scrolling for anchors */
