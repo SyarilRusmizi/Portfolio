@@ -282,7 +282,7 @@ const App = () => {
             {/* Project 3 */}
             <div className={`${sectionBgSecondary} rounded-lg ${cardShadowClass} overflow-hidden transform hover:scale-105 transition-transform duration-300`}>
               <img
-                src="public/POLY-VR.jpeg" // Placeholder image
+                src="POLY-VR.jpeg" // Placeholder image
                 alt="Project 1"
                 className="w-full h-52 object-cover"
               />
@@ -308,7 +308,7 @@ const App = () => {
             {/* Project 2 */}
             <div className={`${sectionBgSecondary} rounded-lg ${cardShadowClass} overflow-hidden transform hover:scale-105 transition-transform duration-300`}>
               <img
-                src="public/Qudwah.png" // Placeholder image
+                src="Qudwah.png" // Placeholder image
                 alt="Project 2"
                 className="w-full h-52 object-cover"
               />
@@ -334,7 +334,7 @@ const App = () => {
             {/* Project 1 */}
             <div className={`${sectionBgSecondary} rounded-lg ${cardShadowClass} overflow-hidden transform hover:scale-105 transition-transform duration-300`}>
               <img
-                src="public/Teracell.png" // Placeholder image
+                src="Teracell.png" // Placeholder image
                 alt="Project 1"
                 className="w-full h-52 object-cover"
               />
