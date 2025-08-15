@@ -374,9 +374,8 @@ const App = () => {
                 <p className={`${subtextColorClass} mb-4`}>
                   This is a modern e-commerce React application featuring a complete shopping experience 
                   with product browsing, cart management, user authentication, and a multi-step checkout 
-                  process. The website includes advanced features like order history tracking, reorder 
-                  functionality, dark mode support, and a fully responsive design that works seamlessly 
-                  across all devices.
+                  process. The website includes advanced features like dark mode support and a fully 
+                  responsive design that works seamlessly across all devices.
                 </p>
                 {/* First Button */}
                 <a
