@@ -356,6 +356,50 @@ const App = () => {
                 </a>
               </div>
             </div>
+
+            {/* Project 1 */}
+            <div className={`${sectionBgSecondary} rounded-lg ${cardShadowClass} overflow-hidden transform hover:scale-105 transition-transform duration-300`}>
+              <img
+                src="Ecommerce.png" // Placeholder image
+                alt="Project 1"
+                className="w-full h-52 object-cover"
+              />
+              <div className="p-6">
+                <h3 className={`text-3xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                  Personal Project (frontend)
+                </h3>
+                <h2 className={`text-2xl font-medium italic mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                  2025
+                </h2>
+                <p className={`${subtextColorClass} mb-4`}>
+                  This is a modern e-commerce React application featuring a complete shopping experience 
+                  with product browsing, cart management, user authentication, and a multi-step checkout 
+                  process. The website includes advanced features like order history tracking, reorder 
+                  functionality, dark mode support, and a fully responsive design that works seamlessly 
+                  across all devices.
+                </p>
+                {/* First Button */}
+                <a
+                  href="https://project-modernshop.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-block ${buttonBgClass} ${buttonTextColor} font-semibold py-2 px-6 rounded-full transition-colors duration-300 mr-3`}
+                >
+                  View Project
+                </a>
+
+                {/* Second Button */}
+                <a
+                  href="https://github.com/SyarilRusmizi/Ecommerce.git"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-block ${buttonBgClass} ${buttonTextColor} font-semibold py-2 px-6 rounded-full transition-colors duration-300`}
+                >
+                  GitHub
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
